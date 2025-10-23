@@ -1,0 +1,19 @@
+<div class="container">
+  @if (movies && movies.length > 0) {
+    @for (movie of movies; track movie.id) {
+      <app-movie-card
+        [id]="movie.id"
+        [title]="movie.title"
+        [genres]="movie.genres"
+        [posterPath]="movie.posterPath"
+        [voteAverage]="movie.voteAverage"
+        [releaseDate]="movie.releaseDate"
+        [viewMovieDetails]="onViewMovieDetails.bind(this)"
+      />
+    }
+  } @else {
+    <div class="empty-state">
+      <p>{{ emptyStateMessage }}</p>
+    </div>
+  }
+</div>

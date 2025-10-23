@@ -1,0 +1,34 @@
+<div>
+  <div class="poster">
+    <img
+      class="poster-img"
+      src="https://image.tmdb.org/t/p/original{{ posterPath }}"
+      alt="poster"
+      loading="lazy"
+    />
+    <div class="overlay">
+      <div class="overlay-content">
+        <button nz-button class="view-details-button" (click)="viewMovieDetails(id)">
+          View Details
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="info">
+    <div class="title-row">
+      <h3 class="title">{{ title }}</h3>
+      <div class="rating">
+        <nz-icon nzType="star" nzTwotoneColor="#fbbf24" nzTheme="twotone" />
+        <span>{{ voteAverage }}</span>
+      </div>
+    </div>
+    <div class="genres">
+      @for (genre of genres.slice(0, 2); track genre) {
+        <nz-tag class="genres-tag">{{ genre }}</nz-tag>
+      }
+    </div>
+    <div class="meta">
+      <span>{{ releaseDate }}</span>
+    </div>
+  </div>
+</div>

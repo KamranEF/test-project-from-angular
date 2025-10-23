@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/ng-zorro-antd/ng-zorro-antd.less';
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+//@font-family: "BBH Sans Bogle", sans-serif;
+@font-weight: 400;
+@font-style: normal;
+@font-size-base: 16px;
+@border-radius-base: 8px;
+@primary-color: Rebeccapurple;
+
+.ant-modal-content {
+  border-radius: 0.5rem;
+  margin: 1rem;
+}
+
+.ant-modal-body {
+  padding: 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.ant-modal-close {
+  background: #fbbf24;
+  border-radius: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+.movie-details-card {
+  width: auto !important;
+  max-width: 1024px !important;
+}

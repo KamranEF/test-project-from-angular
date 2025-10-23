@@ -1,0 +1,29 @@
+<header class="header">
+  <div class="header-container">
+    <div class="logo-container">
+      <button nz-button nzType="primary" nzShape="circle">
+        <nz-icon nzType="dingding" />
+      </button>
+      <span class="logo-text">Filmory</span>
+    </div>
+    <div class="actions-container">
+      @if (isAuthenticated) {
+        <ng-container *ngTemplateOutlet="signOutButton" />
+      } @else {
+        <ng-container *ngTemplateOutlet="signInButton" />
+      }
+      <ng-template #signInButton>
+        <button nz-button nzType="primary">Sign In</button>
+      </ng-template>
+      <ng-template #signOutButton>
+        <button nz-button nzType="primary">Sign Out</button>
+      </ng-template>
+    </div>
+  </div>
+  <input
+    nz-input
+    type="search"
+    (input)="onSearchChange($event)"
+    placeholder="Введите название фильма"
+  />
+</header>

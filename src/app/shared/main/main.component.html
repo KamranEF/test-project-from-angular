@@ -1,0 +1,29 @@
+<div class="wrapper">
+  <span>Browse Movies</span>
+  <nz-tabs [(nzSelectedIndex)]="selectedTabIndex">
+    <nz-tab nzTitle="Now Playing" />
+    <nz-tab nzTitle="Popular" />
+    <nz-tab nzTitle="Top Rated" />
+  </nz-tabs>
+</div>
+@if (searchMovies$ | async; as searchMovies) {
+  <app-movies-list [movies]="searchMovies" (viewMovieDetails)="viewMovieDetails($event)" />
+} @else {
+  @switch (selectedTabIndex) {
+    @case (TabIndex.NowPlaying) {
+      @if (nowPlaying$ | async; as movies) {
+        <app-movies-list [movies]="movies" (viewMovieDetails)="viewMovieDetails($event)" />
+      }
+    }
+    @case (TabIndex.Popular) {
+      @if (popularMovie$ | async; as movies) {
+        <app-movies-list [movies]="movies" (viewMovieDetails)="viewMovieDetails($event)" />
+      }
+    }
+    @case (TabIndex.TopRated) {
+      @if (topRateMovie$ | async; as movies) {
+        <app-movies-list [movies]="movies" (viewMovieDetails)="viewMovieDetails($event)" />
+      }
+    }
+  }
+}
