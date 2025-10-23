@@ -7,22 +7,22 @@
   </nz-tabs>
 </div>
 @if (searchMovies$ | async; as searchMovies) {
-  <app-movies-list [movies]="searchMovies" (viewMovieDetails)="viewMovieDetails($event)" />
+  <app-movies-list [movies]="searchMovies" />
 } @else {
   @switch (selectedTabIndex) {
     @case (TabIndex.NowPlaying) {
       @if (nowPlaying$ | async; as movies) {
-        <app-movies-list [movies]="movies" (viewMovieDetails)="viewMovieDetails($event)" />
+        <app-movies-list [movies]="movies" />
       }
     }
     @case (TabIndex.Popular) {
       @if (popularMovie$ | async; as movies) {
-        <app-movies-list [movies]="movies" (viewMovieDetails)="viewMovieDetails($event)" />
+        <app-movies-list [movies]="movies" />
       }
     }
     @case (TabIndex.TopRated) {
       @if (topRateMovie$ | async; as movies) {
-        <app-movies-list [movies]="movies" (viewMovieDetails)="viewMovieDetails($event)" />
+        <app-movies-list [movies]="movies" />
       }
     }
   }

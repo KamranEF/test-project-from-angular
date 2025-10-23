@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { CommonModule } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -14,8 +14,7 @@ import { MovieService } from '../../core/services/service/movie.service';
 })
 export class Header {
   isAuthenticated = false;
-
-  constructor(private movieService: MovieService) {}
+  private movieService = inject(MovieService);
 
   onSearchChange(event: Event): void {
     const target = event.target as HTMLInputElement;

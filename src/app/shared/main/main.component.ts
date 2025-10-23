@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject, catchError, combineLatest, Observable, of, switchMap } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MoviesList } from '../components/movies-list/movies-list.component';
 import { MovieService } from '../../core/services/service/movie.service';
 import { MovieType, UsedMovieUnionType } from '../../core/services/types/movie.type';
 import { Genre } from '../../core/services/types/genres.type';
-import { MovieDetailsRoot } from '../../core/services/types/movie-details.type';
 import { NzTabComponent, NzTabsComponent } from 'ng-zorro-antd/tabs';
 import { TabIndex } from './types/tab.enum';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { MovieDetailsCard } from '../components/movie-details-card/movie-details-card.components';
 
 @Component({
   selector: 'app-main',
@@ -26,15 +24,10 @@ export class Main {
   popularMovie$: Observable<Pick<MovieType, UsedMovieUnionType>[] | null>;
   topRateMovie$: Observable<Pick<MovieType, UsedMovieUnionType>[] | null>;
   nowPlaying$: Observable<Pick<MovieType, UsedMovieUnionType>[] | null>;
-  movieDataById$: Observable<Partial<MovieDetailsRoot> | null>;
-  movieIdSubject = new BehaviorSubject<number | null>(null);
   genres$: Observable<Genre[]>;
   selectedTabIndex = TabIndex.Popular;
 
-  constructor(
-    private movieService: MovieService,
-    public modalService: NzModalService,
-  ) {
+  constructor(private movieService: MovieService) {
     this.genres$ = this.movieService.genres$.pipe(map((genreResult) => genreResult.genres));
 
     this.searchMovies$ = combineLatest([this.movieService.searchResults$, this.genres$]).pipe(
@@ -112,47 +105,12 @@ export class Main {
         });
       }),
     );
-
-    this.movieDataById$ = this.movieIdSubject.pipe(
-      switchMap((id) => {
-        if (!id) return of(null);
-        return this.movieService.getMovieById(id).pipe(
-          map((movie) => {
-            return movie;
-          }),
-          catchError(() => of(null)),
-        );
-      }),
-    );
-
-    this.movieDataById$.pipe(filter((movie) => movie !== null)).subscribe((movie) => {
-      this.openMovieDetailsModal(movie);
-    });
   }
 
   private transformGenreIdsToNames(genreIds: number[], genres: Genre[]): string[] {
     return genreIds.map((id) => {
       const genre = genres.find((g) => g.id === id);
       return genre?.name || '';
-    });
-  }
-
-  viewMovieDetails = (id: number | null) => {
-    this.movieIdSubject.next(id);
-  };
-
-  private openMovieDetailsModal(movie: Partial<MovieDetailsRoot>) {
-    this.modalService.create({
-      nzTitle: '',
-      nzFooter: null,
-      nzMask: false,
-      nzClosable: true,
-      nzMaskClosable: true,
-      nzContent: MovieDetailsCard,
-      nzClassName: 'movie-details-card',
-      nzData: {
-        movie: movie,
-      },
     });
   }
 }
